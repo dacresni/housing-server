@@ -1,0 +1,15 @@
+---
+# tasks file for housing-api
+#
+#
+- name: install django and friends 
+  dnf: pkg={{item}} state present
+  with_items:
+    - dumb-init
+    - python2-pip.noarch
+    - git-core
+- name: pull project 
+  git: 
+- name: install drf and friends via requirements.txt
+  pip: 
+  requirements: housing/requirements.txt
