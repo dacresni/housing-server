@@ -8,8 +8,21 @@
     - dumb-init
     - python2-pip.noarch
     - git-core
+    - postgresql-server
 - name: pull project 
   git: 
-- name: install drf and friends via requirements.txt
+    repo: git@github.com:OpenDataSTL/housing.git
+    dest: /srv/
+- name: install django drf and friends via requirements.txt
   pip: 
-  requirements: housing/requirements.txt
+    requirements: housing/requirements.txt
+
+- name: configure postgres 
+  command: /usr/pgsql/initdb -D {{data_dir}}
+  args: 
+    creates: {{data_dir}}/postgresql.conf 
+- name: add local_settings.py to django project
+  template:
+    src: templates/local_settings.py.j2
+    dest: /srv/housing/housing/local_settings.py
+
