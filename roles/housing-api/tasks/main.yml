@@ -21,8 +21,10 @@
   command: /usr/pgsql/initdb -D {{data_dir}}
   args: 
     creates: {{data_dir}}/postgresql.conf 
-- name: add local_settings.py to django project
-  template:
-    src: templates/local_settings.py.j2
-    dest: /srv/housing/housing/local_settings.py
+- name: make migration database 
+  command:  /srv/housing/manage.py makemigrations
+
+- name: migrate database 
+  command:  /srv/housing/manage.py migrate
+
 
